@@ -3,7 +3,8 @@
         <div class="info">
             <p>{{ propsElement.title }}</p>
             <span>{{ propsElement.original_title }}</span>
-            <span>{{ propsElement.original_language }}</span>
+            <img :src="'https://flagcdn.com/w20/' + getCountryCode(propsElement.original_language) + '.png'"
+                :alt="propsElement.original_language" width="20">
             <span>{{ propsElement.vote_average }}</span>
         </div>
     </div>
@@ -17,8 +18,23 @@ export default {
     ],
     data() {
 
-        return {}
+        return {
+            languageToCountryCode: {
+                'ja': 'jp',
+                'en': 'gb-eng',
+                'ko': 'kr',
+                'zh': 'hk',
+                'hi': 'in'
+
+            },
+        }
+    },
+    methods: {
+        getCountryCode(languageCode) {
+            return this.languageToCountryCode[languageCode] || languageCode;
+        }
     }
+
 }
 </script>
 
@@ -42,6 +58,11 @@ export default {
             text-transform: uppercase;
             font-size: 20px;
             font-weight: bold;
+        }
+
+        img {
+            width: 20px;
+            height: 20;
         }
 
         span {
