@@ -6,18 +6,22 @@
             </figure>
         </div>
         <div>
-            <input type="text">
-            <button>Search</button>
+            <input type="text" id="movie" placeholder="Search..." v-model="store.searchText">
+            <button @click.prevent="$emit('performSearch')">Search</button>
         </div>
     </header>
 </template>
 
 <script>
+import { store } from '../../store';
+
 export default {
     name: "AppHeader",
     data() {
 
-        return {}
+        return {
+            store
+        }
     }
 }
 </script>
@@ -26,7 +30,7 @@ export default {
 @use "../../styles/partials/variables" as *;
 
 header {
-    background-color: #1B1B1B;
+    background-color: $bg_header;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,7 +49,6 @@ header {
         background: #edeef0;
         border-radius: 10px;
         padding-left: 20px;
-        margin-bottom: 25px;
 
         input {
             flex: 1;
