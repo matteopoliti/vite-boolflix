@@ -24,16 +24,25 @@ export default {
 
             store.apiUrlMovie = "https://api.themoviedb.org/3/search/movie?api_key=cddc39791350ea40e48f19a67d953972&query="
 
+            store.apiUrlTv = "https://api.themoviedb.org/3/search/tv?api_key=cddc39791350ea40e48f19a67d953972&query="
+
             if (store.searchText != "") {
                 store.apiUrlMovie += `${store.searchText}`
+                store.apiUrlTv += `${store.searchText}`
             }
             axios
                 .get(store.apiUrlMovie)
                 .then(response => {
                     store.arrayFilm = response.data.results
-                    console.log(store.arrayFilm)
                     store.loading = false
 
+                })
+            axios
+                .get(store.apiUrlTv)
+                .then(response => {
+                    store.arrayFilm = store.arrayFilm.concat(response.data.results)
+                    store.loading = false
+                    console.log(store.arrayFilm)
                 })
         }
     },

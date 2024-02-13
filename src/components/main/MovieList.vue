@@ -1,8 +1,11 @@
 <template>
     <div class="col">
         <div class="info">
-            <p>{{ propsElement.title }}</p>
-            <span>{{ propsElement.original_title }}</span>
+            <p v-if="propsElement.title">{{ propsElement.title }}</p>
+            <p v-else>{{ propsElement.name }}</p>
+
+            <span v-if="propsElement.original_title">{{ propsElement.original_title }}</span>
+            <span v-else>{{ propsElement.original_name }}</span>
             <img :src="'https://flagcdn.com/w20/' + getCountryCode(propsElement.original_language) + '.png'"
                 :alt="propsElement.original_language" width="20">
             <span>{{ propsElement.vote_average }}</span>
@@ -24,7 +27,8 @@ export default {
                 'en': 'gb-eng',
                 'ko': 'kr',
                 'zh': 'hk',
-                'hi': 'in'
+                'hi': 'in',
+                'da': 'dk'
 
             },
         }
@@ -66,7 +70,6 @@ export default {
         }
 
         span {
-            text-transform: capitalize;
             font-size: 20px;
             color: #fff;
         }
