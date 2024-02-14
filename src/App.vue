@@ -16,7 +16,8 @@ export default {
         };
     },
     mounted() {
-
+        this.getPopularMovie()
+        this.getPopularSeries()
     },
     methods: {
         getMovie() {
@@ -70,10 +71,63 @@ export default {
                 });
         },
         search() {
+            store.searchPerformed = true;
             this.getMovie();
             this.getSeries();
             this.getMulti();
-        }
+        },
+        getPopularMovie() {
+
+            store.arrayFilm = [];
+
+            store.loading = true
+
+            const options = {
+                method: 'GET',
+                url: `https://api.themoviedb.org/3/movie/popular?api_key=${store.apiKey}`,
+                params: { language: 'en-US', page: '1' },
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZGRjMzk3OTEzNTBlYTQwZTQ4ZjE5YTY3ZDk1Mzk3MiIsInN1YiI6IjY1Y2IzYTgyMWMwOWZiMDE4MjM4NzZjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Kww6Yls0TPkWqOTCKzjrMyqD9gvJ-nc_yTQOor7YdWI'
+                }
+            };
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    store.arrayFilm = response.data.results
+                    store.loading = false
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        },
+        getPopularSeries() {
+
+            store.arraySerieTv = [];
+
+            store.loading = true
+
+            const options = {
+                method: 'GET',
+                url: 'https://api.themoviedb.org/3/tv/popular',
+                params: { language: 'en-US', page: '1' },
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZGRjMzk3OTEzNTBlYTQwZTQ4ZjE5YTY3ZDk1Mzk3MiIsInN1YiI6IjY1Y2IzYTgyMWMwOWZiMDE4MjM4NzZjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Kww6Yls0TPkWqOTCKzjrMyqD9gvJ-nc_yTQOor7YdWI'
+                }
+            };
+
+            axios
+                .request(options)
+                .then(function (response) {
+                    store.arraySerieTv = response.data.results
+                    store.loading = false
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        },
 
     },
 }
