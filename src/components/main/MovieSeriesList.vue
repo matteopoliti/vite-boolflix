@@ -1,11 +1,15 @@
 <template>
     <div class="col">
         <div class="info">
-            <p v-if="propsElement.title">{{ propsElement.title }}</p>
-            <p v-else>{{ propsElement.name }}</p>
+            <figure>
+                <img v-if="(propsElement.poster_path === null)" src="../../assets/img/anteprima-non-disponibile.jpg"
+                    :alt="propsElement.title">
+                <img v-else :src="'http://image.tmdb.org/t/p/w342' + propsElement.poster_path" :alt="propsElement.title">
+            </figure>
 
-            <span v-if="propsElement.original_title">{{ propsElement.original_title }}</span>
-            <span v-else>{{ propsElement.original_name }}</span>
+            <h5>{{ propsElement.title ? propsElement.title : propsElement.name }}</h5>
+
+            <span>{{ propsElement.original_title ? propsElement.original_title : propsElement.original_name }}</span>
             <img :src="'https://flagcdn.com/w20/' + getCountryCode(propsElement.original_language) + '.png'"
                 :alt="propsElement.original_language" width="20">
             <span>{{ propsElement.vote_average }}</span>
@@ -57,11 +61,17 @@ export default {
         justify-content: space-between;
         align-items: center;
 
-        p {
+        figure {
+            img {
+                width: 342px;
+                height: 513px;
+            }
+        }
+
+        h5 {
             color: #fff;
             text-transform: uppercase;
             font-size: 20px;
-            font-weight: bold;
         }
 
         img {
@@ -70,7 +80,7 @@ export default {
         }
 
         span {
-            font-size: 20px;
+            font-size: 16px;
             color: #fff;
         }
     }
