@@ -45,11 +45,12 @@ main {
         color: #FFF;
         font-size: 34px;
         text-align: left;
+        margin-bottom: 20px;
     }
 
     .row {
         display: flex;
-        gap: 20px;
+        gap: 10px;
         flex-wrap: wrap;
     }
 
