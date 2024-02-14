@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: "MovieList",
+    name: "MovieSeriesList",
     props: [
         "propsElement"
     ],

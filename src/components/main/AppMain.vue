@@ -1,21 +1,27 @@
 <template>
     <main>
-        <span v-if="(store.loading)" class="loader"></span>
 
+        <h3 :class="(store.arrayFilm.length != 0) ? 'categoria' : 'd_none'">Movies </h3>
         <div :class="(store.arrayFilm.length > store.arrayFilm.length - 1) ? 'row' : 'd_none'">
-            <MovieList v-for="(element, index) in store.arrayFilm" :key="index" :propsElement="element" />
+            <span v-if="(store.loading)" :class="(store.arrayFilm.length != 0) ? 'loader' : 'd_none'"></span>
+            <MovieSeriesList v-for="(element, index) in store.arrayFilm" :key="index" :propsElement="element" />
+        </div>
 
+        <h3 :class="(store.arraySerieTv.length != 0) ? 'categoria' : 'd_none'">Series</h3>
+        <div :class="(store.arraySerieTv.length > store.arraySerieTv.length - 1) ? 'row' : 'd_none'">
+            <span v-if="(store.arraySerieTv.length != 0)" :class="(store.search) ? 'loader' : 'd_none'"></span>
+            <MovieSeriesList v-for="(element, index) in store.arraySerieTv" :key="index" :propsElement="element" />
         </div>
     </main>
 </template>
 
 <script>
 import { store } from '../../store';
-import MovieList from "./MovieList.vue"
+import MovieSeriesList from "./MovieSeriesList.vue";
 export default {
     name: "AppMain",
     components: {
-        MovieList
+        MovieSeriesList,
     },
     data() {
 
@@ -34,6 +40,12 @@ main {
     min-height: 90vh;
     text-align: center;
     padding: 50px;
+
+    .categoria {
+        color: #FFF;
+        font-size: 34px;
+        text-align: left;
+    }
 
     .row {
         display: flex;

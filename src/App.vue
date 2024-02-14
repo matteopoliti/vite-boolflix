@@ -16,41 +16,71 @@ export default {
         };
     },
     mounted() {
-        this.getMovie()
+
     },
     methods: {
         getMovie() {
+            store.arrayFilm = [];
+
             store.loading = true
 
-            store.apiUrlMovie = "https://api.themoviedb.org/3/search/movie?api_key=cddc39791350ea40e48f19a67d953972&query="
 
-            store.apiUrlTv = "https://api.themoviedb.org/3/search/tv?api_key=cddc39791350ea40e48f19a67d953972&query="
+            if (store.searchText) {
 
-            if (store.searchText != "") {
-                store.apiUrlMovie += `${store.searchText}`
-                store.apiUrlTv += `${store.searchText}`
+                axios
+                    .get(`${store.apiUrlMovie}?api_key=${store.apiKey}&query=${store.searchText}`)
+                    .then(response => {
+                        store.arrayFilm = response.data.results
+                        store.loading = false
+
+                    })
+
             }
-            axios
-                .get(store.apiUrlMovie)
-                .then(response => {
-                    store.arrayFilm = response.data.results
-                    store.loading = false
+        },
+        getSeries() {
+            store.arraySerieTv = []
 
-                })
+            store.loading = true
+
+            if (store.searchText) {
+                axios
+                    .get(`${store.apiUrlTv}?api_key=${store.apiKey}&query=${store.searchText}`)
+                    .then(response => {
+                        store.arraySerieTv = response.data.results
+                        store.loading = false
+                        console.log(store.arraySerieTv)
+                    })
+            }
+        },
+        getMulti() {
+            const options = {
+                method: 'GET',
+                url: `https://api.themoviedb.org/3/search/multi?api_key=${store.apiKey}`,
+                params: { include_adult: 'false', language: 'en-US', page: '1' },
+                headers: { accept: 'application/json' }
+            };
+
             axios
-                .get(store.apiUrlTv)
-                .then(response => {
-                    store.arrayFilm = store.arrayFilm.concat(response.data.results)
-                    store.loading = false
-                    console.log(store.arrayFilm)
+                .request(options)
+                .then(function (response) {
+                    console.log(response.data);
                 })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        },
+        search() {
+            this.getMovie();
+            this.getSeries();
+            this.getMulti();
         }
+
     },
 }
 </script>
 
 <template>
-    <AppHeader @performSearch="getMovie" />
+    <AppHeader @performSearch="search" />
     <AppMain />
 </template>
 
