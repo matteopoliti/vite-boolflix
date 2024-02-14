@@ -36,7 +36,6 @@ export default {
 @use "../../styles/partials/variables" as *;
 
 main {
-    background-color: black;
     min-height: 90vh;
     text-align: center;
     padding: 50px;

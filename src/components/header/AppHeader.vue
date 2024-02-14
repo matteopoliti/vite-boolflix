@@ -6,7 +6,7 @@
             </figure>
         </div>
         <div>
-            <input type="text" id="movie" placeholder="Search..." v-model="store.searchText">
+            <input type="text" id="movie" placeholder="Movies, TV series..." v-model="store.searchText">
             <button @click.prevent="$emit('performSearch')">Search</button>
         </div>
     </header>

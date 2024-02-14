@@ -1,19 +1,35 @@
 <template>
     <div class="col">
-        <div class="info">
+
+        <div>
             <figure>
                 <img v-if="(propsElement.poster_path === null)" src="../../assets/img/anteprima-non-disponibile.jpg"
                     :alt="propsElement.title">
                 <img v-else :src="'http://image.tmdb.org/t/p/w342' + propsElement.poster_path" :alt="propsElement.title">
             </figure>
 
-            <h5>{{ propsElement.title ? propsElement.title : propsElement.name }}</h5>
+            <div class="info">
+                <h5> {{ propsElement.title ? propsElement.title : propsElement.name }}</h5>
 
-            <span>{{ propsElement.original_title ? propsElement.original_title : propsElement.original_name }}</span>
-            <img :src="'https://flagcdn.com/w20/' + getCountryCode(propsElement.original_language) + '.png'"
-                :alt="propsElement.original_language" width="20">
-            <span v-html="getStar(Math.ceil(propsElement.vote_average / 2))" class="star"></span>
+                <span>Original title: {{ propsElement.original_title ? propsElement.original_title :
+                    propsElement.original_name }}</span>
+                <div class="lingua">
+                    <span>Original language: </span>
+                    <img :src="'https://flagcdn.com/w20/' + getCountryCode(propsElement.original_language) + '.png'"
+                        :alt="propsElement.original_language" width="20">
+                </div>
+                <div>
+                    <span>Vote: </span>
+                    <span v-html="getStar(Math.ceil(propsElement.vote_average / 2))" class="star"> </span>
+                </div>
+                <div class="overview">
+                    <p>Overview: {{ propsElement.overview }}</p>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 </template>
 
@@ -67,15 +83,17 @@ export default {
 .col {
     width: calc(100% / 7 - 10px + (10px / 7));
 
-    .info {
+    >div {
+        position: relative;
 
-        min-height: 150px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        justify-content: space-between;
-        align-items: center;
+
+        &:hover .info {
+            opacity: 1;
+        }
+
+        &:hover figure {
+            opacity: 0.1;
+        }
 
         figure {
             img {
@@ -84,26 +102,62 @@ export default {
             }
         }
 
-        h5 {
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 20px;
-        }
 
-        img {
-            width: 20px;
-            height: 20;
-        }
 
-        span {
-            font-size: 16px;
-            color: #fff;
+        .info {
 
-        }
 
-        .star {
-            color: #F8E916;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            width: 80%;
+
+
+
+
+            h5 {
+                color: $netflixColor;
+                text-transform: uppercase;
+                font-size: 26px;
+            }
+
+            .lingua {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                img {
+                    width: 30px;
+                    height: 15px;
+                }
+            }
+
+
+            span {
+                font-size: 16px;
+                color: #fff;
+
+            }
+
+            .star {
+                color: #F8E916;
+            }
+
+            .overview {
+                color: #fff;
+                max-height: 200px;
+                overflow: auto;
+            }
         }
     }
+
 }
 </style>
