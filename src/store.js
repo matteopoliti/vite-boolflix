@@ -8,6 +8,11 @@ export const store = reactive({
     apiUrlMovie: "https://api.themoviedb.org/3/search/movie",
     apiUrlTv: "https://api.themoviedb.org/3/search/tv",
     apiKey: "cddc39791350ea40e48f19a67d953972",
-    searchPerformed: false
+    searchPerformed: false,
+    apiId: "",
+    movieVideoKey: "",
+    seriesVideoKey: "",
+    isActive: true,
+    mediaType: "movie"
 
 });
